@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getNotes } from "../../service/notesService";
 import NoteCard from "../NoteCard/NoteCard";
 import "./Sidebar.css";
 import { setCurrentNote } from "../../features/notesSlice";
@@ -14,10 +13,7 @@ export default function Sidebar() {
      const [isOpenList, setIsOpenList] = useState(false);
      const { user } = useAppSelector((state) => state.auth);
      const { notes } = useAppSelector((state) => state.notes);
-     useEffect(() => {
-          dispatch(getNotes());
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-     }, []);
+     
      return (
           <div className="sidebar  bg-secondary-bg p-5 pe-14 h-screen">
                <div className="header flex items-center justify-between">
