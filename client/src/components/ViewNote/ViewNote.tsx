@@ -44,7 +44,7 @@ export default function ViewNote() {
                </div>
                <hr />
                <div
-                    className="current-note mt-10"
+                    className="current-note mt-10 prose md:ps-32 lg:prose-xl"
                     dangerouslySetInnerHTML={{
                          __html: currentNote ? currentNote.note : "",
                     }}

@@ -6,6 +6,7 @@ import { createNote } from "../../service/notesService";
 import Loader from "../Loader/Loader";
 import { reset } from "../../features/notesSlice";
 import { useNavigate } from "react-router-dom";
+import "./NewNote.css";
 
 export default function NewNote() {
      const dispatch = useAppDispatch();
@@ -15,6 +16,10 @@ export default function NewNote() {
      );
      const [note, setNote] = useState("");
      const [title, setTitle] = useState("");
+
+     useEffect(()=>{
+          console.log(note)
+     },[note])
 
      useEffect(() => {
           setTitle("untitled note (" + notes.length + ")");
@@ -61,7 +66,7 @@ export default function NewNote() {
           "image",
      ];
      return (
-          <div className=" h-full p-4 w-full">
+          <div className="new-note h-full p-4 w-full">
                <h1 className="mb-5 text-2xl">New Note</h1>
                <div className="form-group flex flex-col gap-3 mb-5">
                     <label htmlFor="">Title</label>
