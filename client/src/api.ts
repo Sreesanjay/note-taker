@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = "http://localhost:5000/api"
+const baseURL = "https://note-taker-7quz.onrender.com"
 const token = localStorage.getItem("token");
 const instance = axios.create({
     baseURL,
