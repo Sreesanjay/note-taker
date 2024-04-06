@@ -1,0 +1,6 @@
+.note-card {
+     border: 1px solid #ba7aeb;
+}
+.note-card:hover{
+     background-color: #1d1b29;
+}

@@ -1,0 +1,24 @@
+.current-note h1 {
+     font-size: 32px;
+}
+.current-note h2 {
+     font-size: 24px;
+}
+.current-note h3 {
+     font-size: 20px;
+}
+.current-note h4 {
+     font-size: 16px;
+}
+
+.current-note p{
+    font-size: 16px;
+}
+.current-note {
+     line-height: 35px;
+     height: 100vh;
+     overflow-y: scroll;
+}
+.current-note::-webkit-scrollbar {
+     display: none;
+}

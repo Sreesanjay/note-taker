@@ -1,6 +1,6 @@
 import User from "../model/userModel"
 import bcrypt from "bcryptjs";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import generateToken from "../util/generateToken";
 
 export const signup = async (req: Request, res: Response) => {
@@ -21,18 +21,20 @@ export const signup = async (req: Request, res: Response) => {
         }
         const newUser = await new User({ email, password }).save();
         if (newUser) {
-            const token = await generateToken(newUser.email, newUser._id)
+            const token = await generateToken(newUser.email, newUser._id);
+            delete newUser.password
             return res.status(201).json({
                 success: true,
                 message: 'user registered successfully',
+                user: newUser,
                 token: token
             })
         }
 
-    } catch (err: any) {
+    } catch (err) {
         res.status(500).json({
             error: true,
-            message: err.message
+            message: 'Internal Server Error'
         })
     }
 }
@@ -47,7 +49,6 @@ export const signin = async (req: Request, res: Response) => {
             })
         }
         const user = await User.findOne({ email: email });
-        console.log(user)
         if (!user) {
             res.status(409);
             return res.json({
@@ -55,13 +56,15 @@ export const signin = async (req: Request, res: Response) => {
                 message: 'user or password not match'
             })
         }
-        const match = await bcrypt.compare(password, user.password);
+        const match = await bcrypt.compare(password, user.password as string);
         if (match) {
             const accessToken = await generateToken(user.email, user._id);
+            const userObj = user.toObject();
+            delete userObj.password;
             res.status(201).json({
                 success: true,
                 message: "User loged in successfully",
-                email: user.email,
+                user: userObj,
                 token: accessToken,
             });
         } else {
@@ -74,7 +77,7 @@ export const signin = async (req: Request, res: Response) => {
     } catch (err) {
         return res.json({
             error: true,
-            message: 'Internal server error'
+            message: 'Internal Server Error'
         })
     }
 }
