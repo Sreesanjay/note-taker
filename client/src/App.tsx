@@ -1,9 +1,10 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import Home from "./pages/Home/Home";
+import { lazy } from "react";
 import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
 import ProtectedRoute from "./components/Route/ProtectedRoute";
-import EditNote from "./components/EditNote/EditNote";
+const Home = lazy(() => import("./pages/Home/Home"));
+const EditNote = lazy(() => import("./components/EditNote/EditNote"));
 
 export default function App() {
      return (
