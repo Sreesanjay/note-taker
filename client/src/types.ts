@@ -13,6 +13,7 @@ export interface INote {
     _id?: string;
     title: string;
     note: string;
+    isPinned:boolean;
     createdAt: Date;
     updatedAt: Date;
     is_deleted: boolean;

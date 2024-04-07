@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import NoteCard from "../NoteCard/NoteCard";
 import "./Sidebar.css";
@@ -7,13 +7,23 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { logout } from "../../features/authSlice";
+import { getNotes } from "../../service/notesService";
 
 export default function Sidebar() {
      const dispatch = useAppDispatch();
      const [isOpenList, setIsOpenList] = useState(false);
      const { user } = useAppSelector((state) => state.auth);
      const { notes } = useAppSelector((state) => state.notes);
-     
+     const [searchKey, setSearchKey] = useState("");
+
+     useEffect(() => {
+          const delayDebounceFn = setTimeout(() => {
+               dispatch(getNotes(searchKey));
+          }, 1000);
+          return () => clearTimeout(delayDebounceFn);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+     }, [searchKey]);
+
      return (
           <div className="sidebar  bg-secondary-bg p-5 pe-14 h-screen">
                <div className="header flex items-center justify-between">
@@ -53,6 +63,16 @@ export default function Sidebar() {
                >
                     New Note
                </button>
+               <div className="search-bar">
+                    <input
+                         type="text"
+                         className="bg-secondary-bg border mt-4 w-full h-12 rounded-md ps-3"
+                         onChange={(e) => {
+                              setSearchKey(e.target.value);
+                         }}
+                         placeholder="Search"
+                    />
+               </div>
                <div className="note-cards mt-9 overflow-y-scroll h-5/6">
                     {notes.map((item) => {
                          return <NoteCard note={item} key={item._id} />;

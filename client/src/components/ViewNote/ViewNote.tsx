@@ -19,9 +19,9 @@ export default function ViewNote() {
      }, [isSuccess]);
      return (
           <div className="p-10 text-2xl">
-               <div className="header flex justify-between">
-                    <h1 className="mb-10">{currentNote?.title}</h1>
-                    <div className="manage flex gap-5">
+               <div className="header grid grid-cols-12">
+                    <h1 className="mb-10 col-span-10">{currentNote?.title}</h1>
+                    <div className="manage flex gap-5 justify-end col-span-2">
                          <div
                               className="edit-icon cursor-pointer"
                               onClick={() =>
@@ -44,7 +44,7 @@ export default function ViewNote() {
                </div>
                <hr />
                <div
-                    className="current-note mt-10 prose md:ps-32 lg:prose-xl"
+                    className="current-note mt-10 prose  lg:prose-xl"
                     dangerouslySetInnerHTML={{
                          __html: currentNote ? currentNote.note : "",
                     }}

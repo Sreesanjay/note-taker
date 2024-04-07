@@ -30,7 +30,7 @@ export const createNote = createAsyncThunk(
 
 export const updateNote = createAsyncThunk(
     "notes/updateNote",
-    async ({ note, id }: { note: { title: string, note: string }, id: string }, thunkAPI) => {
+    async ({ note, id }: { note: { title?: string, note?: string, isPinned?: boolean }, id: string }, thunkAPI) => {
         try {
             const { data } = await API.put(`/notes/${id}`, note);
             return data;
@@ -76,9 +76,9 @@ export const deleteNote = createAsyncThunk(
 )
 export const getNotes = createAsyncThunk(
     "notes/getNotes",
-    async (_, thunkAPI) => {
+    async (search: string, thunkAPI) => {
         try {
-            const { data } = await API.get('/notes');
+            const { data } = await API.get(`/notes?search=${search}`);
             return data;
         } catch (error) {
             let payload: ErrorObject | null = null;

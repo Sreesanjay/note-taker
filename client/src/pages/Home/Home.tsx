@@ -7,9 +7,9 @@ import { getNotes } from "../../service/notesService";
 
 export default function Home() {
      const { currentNote } = useAppSelector((state) => state.notes);
-     const dispatch = useAppDispatch()
+     const dispatch = useAppDispatch();
      useEffect(() => {
-          dispatch(getNotes());
+          dispatch(getNotes(""));
           // eslint-disable-next-line react-hooks/exhaustive-deps
      }, []);
      return (
