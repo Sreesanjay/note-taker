@@ -81,12 +81,12 @@ export const noteSlice = createSlice({
             .addCase(updateNote.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.notes = state.notes.map((item) => {
-                    if (item._id === action.payload.note._id) {
-                        item = action.payload.note;
+                state.notes = state.notes.filter((item) => {
+                    if (item._id !== action.payload.note._id) {
+                        return item;
                     }
-                    return item;
                 })
+                state.notes = [action.payload.note, ...state.notes]
                 state.currentNote = action.payload.note;
             })
             .addCase(updateNote.rejected, (state, action) => {
