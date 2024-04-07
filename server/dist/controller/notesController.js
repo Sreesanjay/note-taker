@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteNote = exports.updateNote = exports.getNotes = exports.createNote = void 0;
 const notesModel_1 = __importDefault(require("../model/notesModel"));
+const mongodb_1 = require("mongodb");
 const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -38,13 +39,35 @@ exports.createNote = createNote;
 const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     try {
-        const user_id = (_b = req.user) === null || _b === void 0 ? void 0 : _b._id;
-        const notes = yield notesModel_1.default.find({ user_id: user_id, is_deleted: false }).sort({ updatedAt: -1 });
+        const user_id = new mongodb_1.ObjectId((_b = req.user) === null || _b === void 0 ? void 0 : _b._id);
+        console.log(user_id);
+        const search = req.query.search;
+        const notes = yield notesModel_1.default.aggregate([
+            {
+                $match: {
+                    user_id: user_id,
+                    is_deleted: false
+                }
+            },
+            {
+                $sort: {
+                    isPinned: -1,
+                    updatedAt: -1
+                }
+            }
+        ]);
         if (notes) {
+            const afterSearch = notes === null || notes === void 0 ? void 0 : notes.filter((item) => {
+                return search === ""
+                    ? item
+                    : item.title
+                        .toLowerCase()
+                        .includes(search) || item.note.toLowerCase().includes(search);
+            });
             res.status(200).json({
                 success: true,
                 message: 'notes fetched',
-                notes
+                notes: afterSearch
             });
         }
     }

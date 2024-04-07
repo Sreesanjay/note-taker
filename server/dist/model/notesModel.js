@@ -36,6 +36,13 @@ const noteSchema = new mongoose_1.Schema({
         type: "boolean",
         default: false
     },
-    user_id: { type: "string", required: true }
+    isPinned: {
+        type: "boolean",
+        default: false
+    },
+    user_id: {
+        type: mongoose_1.default.Types.ObjectId,
+        ref: 'User'
+    }
 }, { timestamps: true });
 exports.default = mongoose_1.default.model("Note", noteSchema);

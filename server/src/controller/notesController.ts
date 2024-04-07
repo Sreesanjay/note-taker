@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Note from "../model/notesModel"
-
+import { ObjectId } from "mongodb"
 export const createNote = async (req: Request, res: Response): Promise<void> => {
     try {
         const user_id = req.user?._id;
@@ -24,13 +24,35 @@ export const createNote = async (req: Request, res: Response): Promise<void> => 
 }
 export const getNotes = async (req: Request, res: Response): Promise<void> => {
     try {
-        const user_id = req.user?._id;
-        const notes = await Note.find({ user_id: user_id, is_deleted: false }).sort({ updatedAt: -1 });
+        const user_id = new ObjectId(req.user?._id);
+        console.log(user_id)
+        const search = req.query.search;
+        const notes = await Note.aggregate([
+            {
+                $match: {
+                    user_id: user_id,
+                    is_deleted: false
+                }
+            },
+            {
+                $sort: {
+                    isPinned: -1,
+                    updatedAt: -1
+                }
+            }
+        ]);
         if (notes) {
+            const afterSearch = notes?.filter((item) => {
+                return search === ""
+                    ? item
+                    : item.title
+                        .toLowerCase()
+                        .includes(search as string) || item.note.toLowerCase().includes(search as string)
+            })
             res.status(200).json({
                 success: true,
                 message: 'notes fetched',
-                notes
+                notes: afterSearch
             })
         }
     } catch (err) {

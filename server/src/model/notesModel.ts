@@ -13,7 +13,14 @@ const noteSchema: Schema<INote> = new Schema<INote>({
         type: "boolean",
         default: false
     },
-    user_id: { type: "string", required: true }
+    isPinned: {
+        type: "boolean",
+        default: false
+    },
+    user_id: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }
 }, { timestamps: true })
 
 export default mongoose.model<INote>("Note", noteSchema);

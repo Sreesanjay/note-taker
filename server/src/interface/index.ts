@@ -10,8 +10,9 @@ export interface INote extends Document {
     _id: ObjectId;
     note: string,
     is_deleted: boolean;
-    user_id: string;
+    user_id: ObjectId;
     title: string,
     createdAt: Date,
-    updatedAt: Date
+    updatedAt: Date,
+    isPinned: boolean;
 }
