@@ -10,9 +10,12 @@
 .current-note h4 {
      font-size: 16px;
 }
-
-.current-note p{
-    font-size: 16px;
+ul,
+ol {
+     list-style: initial !important;
+}
+.current-note p {
+     font-size: 16px;
 }
 .current-note {
      line-height: 35px;
