@@ -21,7 +21,7 @@ export default function ViewNote() {
           <div className="p-10 text-2xl">
                <div className="header grid grid-cols-12">
                     <h1 className="mb-10 col-span-10">{currentNote?.title}</h1>
-                    <div className="manage flex gap-5 justify-end col-span-2">
+                    <div className="manage flex gap-5 justify-between sm:justify-end col-span-2">
                          <div
                               className="edit-icon cursor-pointer"
                               onClick={() =>

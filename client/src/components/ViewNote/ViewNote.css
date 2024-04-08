@@ -21,6 +21,7 @@ ol {
      line-height: 35px;
      height: 100vh;
      overflow-y: scroll;
+     color: white;
 }
 .current-note::-webkit-scrollbar {
      display: none;
