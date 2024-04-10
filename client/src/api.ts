@@ -10,4 +10,11 @@ const instance = axios.create({
         Authorization: `Bearer ${JSON.parse(token as string)}`
     }
 });
+
+//clearing bearer token after logout
+instance.interceptors.request.use(function (config) {
+    const token = JSON.parse(localStorage.getItem("token") as string);
+    config.headers["Authorization"] = "Bearer " + token;
+    return config;
+});
 export default instance;
