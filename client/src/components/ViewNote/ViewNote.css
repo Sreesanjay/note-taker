@@ -1,14 +1,18 @@
 .current-note h1 {
      font-size: 32px;
+     color: white;
 }
 .current-note h2 {
      font-size: 24px;
+     color: white;
 }
 .current-note h3 {
      font-size: 20px;
+     color: white;
 }
 .current-note h4 {
      font-size: 16px;
+     color: white;
 }
 ul,
 ol {
@@ -16,9 +20,11 @@ ol {
 }
 .current-note p {
      font-size: 16px;
+     color: white;
 }
 .current-note {
-     line-height: 35px;
+     line-height: 20px;
+     padding-bottom: 300px;
      height: 100vh;
      overflow-y: scroll;
      color: white;
